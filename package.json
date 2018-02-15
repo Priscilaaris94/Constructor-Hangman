@@ -1,0 +1,26 @@
+{
+  "name": "constructor-hangman",
+  "version": "1.0.0",
+  "description": "command-line app",
+  "main": "Letter.js",
+  "dependencies": {
+    "package.json": "^2.0.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Priscilaaris94/Constructor-Hangman.git"
+  },
+  "keywords": [
+    "[]"
+  ],
+  "author": "Priscila de Avila",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Priscilaaris94/Constructor-Hangman/issues"
+  },
+  "homepage": "https://github.com/Priscilaaris94/Constructor-Hangman#readme"
+}
