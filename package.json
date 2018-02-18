@@ -7,6 +7,7 @@
     "colors": "^1.1.2",
     "inquirer": "^5.1.0",
     "package.json": "^2.0.1",
+    "promt": "0.0.0",
     "random-words": "^1.0.0"
   },
   "devDependencies": {},

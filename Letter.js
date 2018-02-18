@@ -23,5 +23,5 @@ function letter (letter) {
     }
     
       
-    module.exports = Letter
+    module.exports = letter;
 

@@ -4,10 +4,12 @@ var colors = require('colors');
 
 var word = require('./Word');
 
-var randomWords = require ('random-words')
+var randomWords = require('random-words')
 
 // setting variables for game
 var guesses = 5;
+
+// var words = [red, blue, green, yellow]
 
 var word = '';
 
@@ -21,14 +23,14 @@ function initGame() {
 
     // var randomNum = Math.floor(Math.random() * words.length)
 
-    word = new Word (randomWords())
+    word = new Word(randomWords())
 
     word.createLetters()
 
 }
 
 
-function playGame () {
+function playGame() {
 
     rightGuess = false;
 
@@ -36,7 +38,7 @@ function playGame () {
 
     //display letters and blankspaces
 
-    word.letters.forEach(function(letterObj){
+    word.letters.forEach(function (letterObj) {
 
         wordDis += letterObj.showing + ' '
 
@@ -45,7 +47,7 @@ function playGame () {
     console.log('\n' + wordDis)
 
 
-// prompting player to guess letter
+    // prompting player to guess letter
     inquirer.prompt([
 
         {
@@ -56,19 +58,19 @@ function playGame () {
 
         }
 
-    ]).then(function(answer){
+    ]).then(function (answer) {
 
-        guesses --
+        guesses--
 
         word.checkLetters(answer.letter)
 
-        if(word.guessedCorrect){
+        if (word.guessedCorrect) {
 
             var correctWord = ''
 
-            word.letters.forEach(function(letterObj){
+            word.letters.forEach(function (letterObj) {
 
-                correctWord+= letterObj.showing + ' '
+                correctWord += letterObj.showing + ' '
 
             })
 
@@ -79,13 +81,13 @@ function playGame () {
 
             playAgain()
 
-        }else if(guesses === 0){
+        } else if (guesses === 0) {
 
             console.log('KO'.red)
 
             playAgain()
 
-        }else{
+        } else {
 
             console.log('\nRemaining Guesses: ' + guesses)
 
@@ -98,7 +100,7 @@ function playGame () {
 }
 
 
-function resetGame () {
+function resetGame() {
 
     inquirer.prompt([
 
@@ -114,9 +116,9 @@ function resetGame () {
 
         }
 
-    ]).then(function(answer){
+    ]).then(function (answer) {
 
-        if(answer.resetGame){
+        if (answer.resetGame) {
 
             initGame()
 
