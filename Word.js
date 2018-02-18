@@ -62,7 +62,7 @@ function Word (word) {
 }
 
 
-module.exports = word
+module.exports = Word
 
 
 

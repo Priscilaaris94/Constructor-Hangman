@@ -2,12 +2,12 @@ var inquirer = require('inquirer');
 
 var colors = require('colors');
 
-var word = require('./word');
+var word = require('./Word');
+
+var randomWords = require ('random-words')
 
 // setting variables for game
 var guesses = 5;
-
-var words = ['red', 'blue', 'yellow', 'black'];
 
 var word = '';
 
@@ -19,9 +19,9 @@ function initGame() {
 
     guesses = 5
 
-    var randomNum = Math.floor(Math.random() * words.length)
+    // var randomNum = Math.floor(Math.random() * words.length)
 
-    word = new Word(words[randomNum])
+    word = new Word (randomWords())
 
     word.createLetters()
 

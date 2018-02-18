@@ -4,7 +4,10 @@
   "description": "command-line app",
   "main": "Letter.js",
   "dependencies": {
-    "package.json": "^2.0.1"
+    "colors": "^1.1.2",
+    "inquirer": "^5.1.0",
+    "package.json": "^2.0.1",
+    "random-words": "^1.0.0"
   },
   "devDependencies": {},
   "scripts": {
