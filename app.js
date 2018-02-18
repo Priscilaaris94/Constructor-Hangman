@@ -1,137 +1,40 @@
-var inquirer = require('inquirer');
-
-var colors = require('colors');
-
+// this file requires the Word.js file 
 var word = require('./Word');
 
-var randomWords = require('random-words')
+// Game requires inquirer npm package to promt user to to enter a letter
+var inquirer = require('inquirer');
 
-// setting variables for game
-var guesses = 5;
+// Game requirers colors npm package to give game color
+var color = require('cli-color');
 
-// var words = [red, blue, green, yellow]
+// create boxes in the terminal
+const boxen = require('boxen');
 
-var word = '';
+// validation
+var isLetter = require('is-letter')
 
-var correctGuess = false;
+// color for correct guess
+var correct = color.green;
 
+// color for incorrect guess
+var incorrect = color.red; 
 
-// starting game 
-function initGame() {
+// if player guesses right, set variable to true, defult (false)
+var guessedCorrectly = false;
 
-    guesses = 5
+// word bank
+var words = ["Colorado", "Chicago", "California", "Canada"]
 
-    // var randomNum = Math.floor(Math.random() * words.length)
+// choose random word
+var randomWord;
+var someWord;
 
-    word = new Word(randomWords())
+var wins = 0;
+var losses = 0;
+var guessesRemaining = 15;
 
-    word.createLetters()
+varplayerGuess = "";
 
-}
-
-
-function playGame() {
-
-    rightGuess = false;
-
-    var wordDis = ''
-
-    //display letters and blankspaces
-
-    word.letters.forEach(function (letterObj) {
-
-        wordDis += letterObj.showing + ' '
-
-    })
-
-    console.log('\n' + wordDis)
-
-
-    // prompting player to guess letter
-    inquirer.prompt([
-
-        {
-
-            name: 'letter',
-
-            message: 'Guess a letter: '
-
-        }
-
-    ]).then(function (answer) {
-
-        guesses--
-
-        word.checkLetters(answer.letter)
-
-        if (word.guessedCorrect) {
-
-            var correctWord = ''
-
-            word.letters.forEach(function (letterObj) {
-
-                correctWord += letterObj.showing + ' '
-
-            })
-
-            console.log(correctWord.green)
-
-            console.log("You got it dude!".blue)
-
-
-            playAgain()
-
-        } else if (guesses === 0) {
-
-            console.log('KO'.red)
-
-            playAgain()
-
-        } else {
-
-            console.log('\nRemaining Guesses: ' + guesses)
-
-            playGame()
-
-        }
-
-    })
-
-}
-
-
-function resetGame() {
-
-    inquirer.prompt([
-
-        {
-
-            type: 'confirm',
-
-            message: 'restart',
-
-            name: 'resetGame',
-
-            default: true
-
-        }
-
-    ]).then(function (answer) {
-
-        if (answer.resetGame) {
-
-            initGame()
-
-            playGame()
-
-        }
-
-    })
-
-}
-
-
-
-initGame()
-
-playGame()
+// letters already guessed
+var lettersGuessedList = "";
+var lettersGuessedListArray = [];
