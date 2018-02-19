@@ -85,50 +85,174 @@ function guessLetter() {
     if (slotsFilledIn < someWord.letter.length || guessesRemaining > 0) {
         inquirer.prompt([
 
-                {
-                    name: "letter",
-                    massage: "guess a letter",
-                    // validation
-                    validate: function (value) {
-                        if (isLetter(value)) {
-                            return true;
-                        } else {
-                            return false;
-                        }
+            {
+                name: "letter",
+                massage: "guess a letter",
+                // validation
+                validate: function (value) {
+                    if (isLetter(value)) {
+                        return true;
+                    } else {
+                        return false;
                     }
                 }
-            ]).then(function (guess) {
-                    // capitulize all letter
-                    guess.letter.toUpperCase();
-                    console.log(gameColor("you guessed:" + guess.letter.toUpperCase()));
+            }
+        ]).then(function (guess) {
+            // capitulize all letter
+            guess.letter.toUpperCase();
+            console.log(gameColor("you guessed:" + guess.letter.toUpperCase()));
 
-                    playerGuessedCorrectly = false;
-                    // if letter has already been guessed let player know.
-                    if (lettersGuessedListArray.indexOf(guess.letter.toUpperCase()) > -1) {
-                        // when letter is guessed twice prompt inquire to tell play to guess again
-                        console.log(gameColor('letter has already been guessed. Guess agian'));
-                        console.log(gameColor('============================='));
-                        guessLetter();
+            playerGuessedCorrectly = false;
+            // if letter has already been guessed let player know.
+            if (lettersGuessedListArray.indexOf(guess.letter.toUpperCase()) > -1) {
+                // when letter is guessed twice prompt inquire to tell play to guess again
+                console.log(gameColor('letter has already been guessed. Guess agian'));
+                console.log(gameColor('============================='));
+                guessLetter();
 
+            } else if (lettersGuessedListArray.indexOf(guess.letter.toUpperCase()) === -1) {
+                // add letter to already guessed
+                lettersGuessedList = lettersGuessedList.concat(" " + guess.letter.toUpperCase());
+                lettersGuessedListArray.push(guess.letter.toUpperCase());
+                // diplay letters guess
+                console.log(boxen(gameColor('Letters guessed:') + lettersGuessedList, {
+                    padding: 2
+                }));
+
+                // loop though all letters in the word, to determine if letter guessed matches letter in word
+
+                for (i = 0; i < someWord.letters.length; i++) {
+                    if (guess.letter.toUpperCase() === someWord.letters[i].character && someWord.letters[i].letterGuessesRight === false) {
+                        //   set letterGuessedRight prperty for letter = true
+                        someWord.letters[i].letterGuessesRight === true;
+                        playerGuessedCorrectly = true;
+                        someWord.underscores[i] = guess.letter.toUpperCase();
+                        slotsFilledIn++
                     }
+                }
+                console.log(gameColor('guess word:'));
+                someWord.splitWord();
+                someWord.generateLetters();
 
-                    else if (lettersGuessedListArray.indexOf(guess.letter.toUpperCase()) === -1){
-                        // add letter to already guessed
-                        lettersGuessedList =lettersGuessedList.concat(" " + guess.letter.toUpperCase());
-                        lettersGuessedListArray.push(guess.letter.toUpperCase());
-                        // diplay letters guess
-                        console.log(boxen(gameColor('Letters guessed:') + lettersGuessedList, {padding: 2}));
+                if (playerGuessedCorrectly) {
+                    console.log(correct('you got it dude!'));
+                    console.log(gameColor('=============================='));
+                    checkIfPlayerWon();
+                } else {
+                    console.log(incorrect('wrong dude!'));
+                    guessesRemaining--;
+                    console.log(gameColor("you have" + guessesRemaining + "guesses remaining."));
+                    console.log(gameColor("============================================="));
+                    checkIfPlayerWon();
 
-                        // loop though all letters in the word, to determine if letter guessed matches letter in word
+                }
+            }
+        });
+    }
+}
 
-                        for (i = 0; i < someWord.letters.length; i++) {
-                          if (guess.letter.toUpperCase() === someWord.letters[i].character && someWord.letters[i].letterGuessesRight === false){
-                            //   set letterGuessedRight prperty for letter = true
-                            someWord.letters[i].letterGuessesRight === true;
-                            playerGuessedCorrectly = true;
-                            someWord.underscores[i] = guess.letter.toUpperCase();
-                            slotsFilledIn++
-                          }  
-                        }
-                        console.log(gameColor('word'))
-                    }
+//function will check if the player won or lost after user guesses a letter.
+function checkIfUserWon() {
+
+    //When number of guesses remaining is 0, end game.
+    if (guessesRemaining === 0) {
+
+        console.log(gameColor("====================================================================="));
+
+        console.log(incorrect('KO'));
+
+        console.log(gameColor("The correct state was: " + randomWord));
+
+        //Increment loss counter by 1
+        losses++;
+
+        //Display wins and losses totals.
+
+        console.log(gameColor("Wins: " + wins));
+
+        console.log(gameColor("Losses: " + losses));
+
+        console.log(gameColor("====================================================================="));
+
+        //Ask player if they want to play again. Call playAgain function.
+        playAgain();
+
+    }
+
+
+
+    //else if the number of slots/underscores that are filled in with a letter equals the number of letters in the word, the user won.
+    else if (slotsFilledIn === someWord.letters.length) {
+
+        console.log(gameTextColor("====================================================================="));
+        console.log(correct("YOU WON DUDE!"));
+
+        //Increment win counter by 1
+        wins++;
+
+        //Display total wins and losses
+        console.log(gameColor("Wins: " + wins));
+
+        console.log(gameColor("Losses: " + losses));
+
+        console.log(gameColor("====================================================================="));
+
+        //Ask player if they want to play again. Call playAgain function.
+
+        playAgain();
+
+    } else {
+
+        //If player did not win or lose after a guess, keep running inquirer.
+        guessLetter("");
+
+    }
+}
+
+//function that will ask player if they want to reset when game is over.
+function playAgain() {
+
+    var resetGame = [
+
+        {
+
+            type: 'confirm',
+
+            name: 'playAgain',
+
+            message: 'Do you want to reset game?',
+
+            default: true
+
+        }
+
+    ];
+
+    inquirer.prompt(resetGame).then(playerWantsTo => {
+
+        if (playerWantsTo.playAgain) {
+
+            //Empty array with letters already guessed
+            lettersGuessedList = "";
+
+            lettersGuessedListArray = [];
+
+            //Set number of slots filled in with letters back to zero 
+            slotsFilledIn = 0;
+
+            console.log(gameColor("Let's do this!"));
+
+            //start a new game.
+            startGame();
+        } else {
+
+            //player is done playing (end game)
+            console.log(gameColor("bye for now!"));
+
+            return;
+
+        }
+
+    });
+
+}
