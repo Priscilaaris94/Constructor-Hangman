@@ -1,68 +1,28 @@
 // constructing of letters to create word and varify if letter guessed is correct
-var letter = require('./Letter')
+var Letter = require('./Letter')
 
 
-function Word (word) {
+var word = function(word) {
 
     this.word = word;
 
     this.letters = [];
 
-    this.guessedCorrect = false;
+    this.underscores = [];
 
-    
-    this.createLetters = function () {
-        var that = this
-
-        var let = this.word.split("")
-
-        let.forEach(letter => {
-
-            var newLetter = new Letter(letter)
-
-            that.letters.push(newLetter)
-
-        });
-
+    this.splitWord = function() {
+        this.letters = this.word.split("");
+        numberUnderscoresNeeded = this.letters.length;
+        console.log(this.underscores.join(" "));
     }
 
-
-    this.checkLetters = function (guessedLetter) {
-
-        var that = this
-
-        var counter = 0
-
-        this.letters.forEach(letterObj => {
-
-            letterObj.check(guessedLetter)
-
-            //if a letter is guessed add 1
-
-            if(letterObj.guessed === true){
-
-                counter ++
-
-            }
-
-        })
-
-        //correct word has been guessed
-
-        if(counter === that.letters.length){
-
-            that.guessedRight = true
-
+    this.generateLetters = function() {
+        for (i = 0; i < this.letters.length; i++){
+        this.letter[i] = new Letter (this.letters[i]);
+        this.letters[i].showCharacter();
         }
-       
-
     }
-
-
 }
 
-
+// Export the Word constructor (reference it in app.js)
 module.exports = Word;
-
-
-
