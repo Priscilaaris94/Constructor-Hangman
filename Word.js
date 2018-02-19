@@ -2,7 +2,7 @@
 var Letter = require('./Letter')
 
 
-var word = function(word) {
+var Word = function(word) {
 
     this.word = word;
 

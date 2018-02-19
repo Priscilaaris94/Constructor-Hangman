@@ -5,7 +5,7 @@ var word = require('./Word');
 var inquirer = require('inquirer');
 
 // Game requirers colors npm package to give game color
-var clc = require('cli-color');
+var color = require('cli-color');
 
 // used to draw title
 var figlet = require('figlet');
@@ -22,7 +22,7 @@ var correct = color.green;
 // color for incorrect guess
 var incorrect = color.red;
 
-var gameColor = clc.blueBright;
+var gameColor = color.blueBright;
 
 // if player guesses right, set variable to true, defult (false)
 var guessedCorrectly = false;
@@ -47,16 +47,48 @@ var lettersGuessedListArray = [];
 // # of underscores filled by letter
 var slotsFilledIn = 0;
 
-// start game
+// game title
 figlet("Hangman", function (err, data) {
     if (err) {
-        console.log('error has occured');
+        console.log('An error has occured');
         console.dir(err);
         return;
     }
     console.log(data)
 });
 
+// function to prompt the player to enter their info to confirm game.
+function confirmGame() {
+	var startGame = [
+	 {
+	 	type: 'text',
+	 	name: 'playerName',
+	 	message: 'What is your name?'
+	 },
+	 {
+	    type: 'confirm',
+	    name: 'readyToPlay',
+	    message: 'would you like to play?',
+	    default: true
+	  }
+	];
+
+	inquirer.prompt(startGame).then(answers => {
+		//If the player confirms: they want to play, start game.
+		if (answers.readyToPlay){
+			console.log(gameColor("Let get ready to rumble, " + answers.playerName + ". Let's do this..."));
+			startGame();
+		}
+
+		else {
+			//If the player decides: not to play, exit game.
+			console.log(gameColor("See ya, " + answers.playerName));
+			return;
+		}
+	});
+}
+
+// function to start
 function startGame() {
     guessedRemaining = 5;
     // choose random word from list
@@ -245,7 +277,7 @@ function playAgain() {
             //start a new game.
             startGame();
         } else {
-
+aqs
             //player is done playing (end game)
             console.log(gameColor("bye for now!"));
 
