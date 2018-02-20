@@ -86,7 +86,7 @@ function confirmGame() {
 }
 
 // function to start playing
-function startGame() {
+function playGame() {
     guessedRemaining = 5;
     // choose random word from list
     chooseRandomWord();
