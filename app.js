@@ -51,7 +51,7 @@ var slotsFilledIn = 0;
 figlet("Hangman", function (err, data) {
     if (err) {
         console.log('An error has occured');
-        console.dir(err);
+        console.log(err);
         return;
     }
     console.log(data)
@@ -59,36 +59,33 @@ figlet("Hangman", function (err, data) {
 
 // function to prompt the player to enter their info to confirm game.
 function confirmGame() {
-	var startGame = [
-	 {
-	 	type: 'text',
-	 	name: 'playerName',
-	 	message: 'What is your name?'
-	 },
-	 {
-	    type: 'confirm',
-	    name: 'readyToPlay',
-	    message: 'would you like to play?',
-	    default: true
-	  }
-	];
+    var startGame = [{
+            type: 'text',
+            name: 'playerName',
+            message: 'What is your name?'
+        },
+        {
+            type: 'confirm',
+            name: 'readyToPlay',
+            message: 'would you like to play?',
+            default: true
+        }
+    ];
 
-	inquirer.prompt(startGame).then(answers => {
-		//If the player confirms: they want to play, start game.
-		if (answers.readyToPlay){
-			console.log(gameColor("Let get ready to rumble, " + answers.playerName + ". Let's do this..."));
-			startGame();
-		}
-
-		else {
-			//If the player decides: not to play, exit game.
-			console.log(gameColor("See ya, " + answers.playerName));
-			return;
-		}
-	});
+    inquirer.prompt(startGame).then(answers => {
+        //If the player confirms: they want to play, start game.
+        if (answers.readyToPlay) {
+            console.log(gameColor("Let get ready to rumble, " + answers.playerName + ". Let's do this..."));
+            startGame();
+        } else {
+            //If the player decides: not to play, exit game.
+            console.log(gameColor("See ya, " + answers.playerName));
+            return;
+        }
+    });
 }
 
-// function to start
+// function to start playing
 function startGame() {
     guessedRemaining = 5;
     // choose random word from list
@@ -184,7 +181,7 @@ function guessLetter() {
 }
 
 //function will check if the player won or lost after user guesses a letter.
-function checkIfUserWon() {
+function checkIfPlayerWon() {
 
     //When number of guesses remaining is 0, end game.
     if (guessesRemaining === 0) {
@@ -216,7 +213,7 @@ function checkIfUserWon() {
     //else if the number of slots/underscores that are filled in with a letter equals the number of letters in the word, the user won.
     else if (slotsFilledIn === someWord.letters.length) {
 
-        console.log(gameTextColor("====================================================================="));
+        console.log(gameColor("====================================================================="));
         console.log(correct("YOU WON DUDE!"));
 
         //Increment win counter by 1
@@ -277,7 +274,7 @@ function playAgain() {
             //start a new game.
             startGame();
         } else {
-aqs
+            aqs
             //player is done playing (end game)
             console.log(gameColor("bye for now!"));
 
