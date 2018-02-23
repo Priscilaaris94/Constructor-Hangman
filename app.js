@@ -55,6 +55,7 @@ figlet("Hangman", function (err, data) {
         return;
     }
     console.log(data)
+    confirmGame();
 });
 
 // function to prompt the player to enter their info to confirm game.
@@ -76,7 +77,7 @@ function confirmGame() {
         //If the player confirms: they want to play, start game.
         if (answers.readyToPlay) {
             console.log(gameColor("Let get ready to rumble, " + answers.playerName + ". Let's do this..."));
-            startGame();
+            playGame();
         } else {
             //If the player decides: not to play, exit game.
             console.log(gameColor("See ya, " + answers.playerName));
