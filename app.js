@@ -55,6 +55,7 @@ figlet("Hangman", function (err, data) {
         return;
     }
     console.log(data)
+    console.log("Theme is states that start with letter C.")
     confirmGame();
 });
 
@@ -88,7 +89,7 @@ function confirmGame() {
 
 // function to start playing
 function playGame() {
-    guessedRemaining = 5;
+    guessesRemaining = 5;
     // choose random word from list
     chooseRandomWord();
 
@@ -102,16 +103,16 @@ function chooseRandomWord() {
     //  set random word to someWord
     someWord = new word(randomWord);
     // let player know the number of letter in the word
-    console.log(gameColor("your word has" + randomWord.length + "letters."));
+    console.log(gameColor("your word has\n " + randomWord.length + "\n letters."));
     // split the word and populate letter. (using word constructor)
     someWord.splitWord();
-    someWord.generateLetters();
+     someWord.generateLetters();
     guessLetter();
 }
 
 // prompt letting player to enter a letter
 function guessLetter() {
-    //  letting player know the still have guesses
+    //  letting player know they still have guesses
     if (slotsFilledIn < someWord.letter.length || guessesRemaining > 0) {
         inquirer.prompt([
 
